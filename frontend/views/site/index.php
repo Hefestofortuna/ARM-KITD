@@ -5,6 +5,8 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 use yii\helpers\Html;
 use yii\grid\GridView;
+use \yii\helpers\ArrayHelper;
+use \app\models\Org;
 
 $this->title = 'АРМ-КИТД';
 ?>
@@ -20,15 +22,23 @@ $this->title = 'АРМ-КИТД';
         </p>
 <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel, 
-               
-        'options' => ['style' => 'table-layout:fixed;' ],        
+        'filterModel' => $searchModel,
+
+        'options' => ['style' => 'table-layout: fixed;font-size:12px;' ],
         'columns' => [
-            
+
             //['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute'=>'number',
                 'headerOptions' => ['style' => 'width: 5%'],
+            ],
+            [
+                'attribute' => 'id_org',
+                'headerOptions' => ['style' => 'width: 15%'],
+                'filter'=>ArrayHelper::map(Org::find()->all(),'id','code'),
+                'content' => function($model){
+                    return $model->org->code;
+                }
             ],
             [
                 'attribute'=>'date',
@@ -44,7 +54,7 @@ $this->title = 'АРМ-КИТД';
             'scheme',
             [
                 'attribute'=>'descriptin',
-                'headerOptions' => ['style' => 'width:15%'],
+                'contentOptions' => ['style' => 'width:15%; max-width: 250px;'],
             ],
             'reason',
             [
@@ -63,12 +73,15 @@ $this->title = 'АРМ-КИТД';
             ],
             [
                 'attribute' => 'result',
+                'filter'=>['0'=>'На рассмотрении','1'=>'Опровергнуто','2'=>'Согласованно'],
                 'headerOptions' => ['style' => 'width:11%'],
                 'content' => function($model){
-                    if($model->result != 1){
-                        return '<font color="red">Спровергнуто</font>';
-                    }else{
+                    if($model->result == 1){
+                        return '<font color="red">Опровергнуто</font>';
+                    }elseif($model->result == 2){
                         return '<font color="green">Согласованно</font>';
+                    }else{
+                      return '<font color="orange">На рассмотрении</font>';
                     }
                 }
             ],
@@ -83,7 +96,7 @@ $this->title = 'АРМ-КИТД';
                     $url ='index.php?r=scheme/view&id='.$model->id;
                     return $url;
                 }
-    
+
                 //if ($action === 'update') {
                  //   $url ='index.php?r=scheme/update&id='.$model->id;
                 //    return $url;
@@ -92,8 +105,8 @@ $this->title = 'АРМ-КИТД';
                     $url ='index.php?r=scheme/delete&id='.$model->id;
                     return $url;
                 }
-    
-              },      
+
+              },
         ],
         ],
     ]); ?>

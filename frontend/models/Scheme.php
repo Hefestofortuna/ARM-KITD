@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use \yii\helpers\ArrayHelper;
 
 use Yii;
 
@@ -42,10 +43,10 @@ class Scheme extends \yii\db\ActiveRecord
         }
         else{
             return $this->number;
-        }        
+        }
     }
 
-   
+
     /**
      * {@inheritdoc}
      */
@@ -78,7 +79,7 @@ class Scheme extends \yii\db\ActiveRecord
             'id_org' => 'Организация',
             'date_utv' => 'Дата утверждения изменения',
             'date_fuck' => 'Дата внедрения (фактическая)',
-            
+
         ];
     }
     public function getUser()
@@ -94,8 +95,6 @@ class Scheme extends \yii\db\ActiveRecord
         return $this->hasOne(Org::className(),['id'=>'id_org']);
     }
 
-
-    
     public function getShch()
     {
         return $this->hasOne(Shch::className(),['number_scheme'=>'id']);
@@ -105,5 +104,10 @@ class Scheme extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Shl::className(),['number_scheme'=>'id']);
         # code...
+    }
+    public function getListOrg()
+    {
+      return ArrayHelper::map(Org::find()->all(),'id','code');
+      // code...
     }
 }

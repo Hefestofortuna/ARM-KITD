@@ -17,7 +17,18 @@ use yii\web\NotFoundHttpException;
 class SiteController extends Controller
 {
 
-
+    public function behaviors(){
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                    ],
+                ],
+            ],
+        ];
+    }
     public function actionIndex()
     {
 
@@ -39,7 +50,7 @@ class SiteController extends Controller
             $model->attributes = Yii::$app->request->post('Signup');
             if($model->validate() && $model->signup())
             {
-                return $this->goHome();
+                return  Yii::$app->getResponse()->redirect(array('site/login'));
             }
         }
         return $this->render('signup',['model'=>$model]);
@@ -54,7 +65,8 @@ class SiteController extends Controller
     {
         if(!Yii::$app->user->isGuest)
         {
-            return $this->goHome();
+            Yii::$app->getResponse()->redirect(array('site/index'));
+            //return $this->goHome();
         }
         $login_model = new Login();
         if(Yii::$app->request->post('Login'))

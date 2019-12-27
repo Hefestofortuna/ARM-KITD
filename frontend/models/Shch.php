@@ -12,7 +12,8 @@ use Yii;
  * @property string|null $date_shch
  * @property string|null $number_date_protocol
  * @property string|null $date_plan
- * @property string|null $date_fuck
+ * @property string|null $date_fuck 
+ * @property string|null $date_shl
  * @property string|null $number_date_raport
  * @property string|null $couse
  * @property string|null $date_scheme
@@ -37,7 +38,7 @@ class Shch extends \yii\db\ActiveRecord
     {
         return [
             [['number_scheme'], 'integer'],
-            [['date_shch', 'date_plan', 'date_fuck', 'date_scheme', 'date_ex'], 'safe'],
+            [['date_shch', 'date_plan', 'date_fuck','date_shl' , 'date_scheme', 'date_ex'], 'safe'],
             [['number_date_protocol', 'number_date_raport', 'couse', 'otv', 'ispol'], 'string', 'max' => 255],
         ];
     }
@@ -54,6 +55,7 @@ class Shch extends \yii\db\ActiveRecord
             'number_date_protocol' => '№ и дата протокола',
             'date_plan' => 'Плановая дата внедрения',
             'date_fuck' => 'Фактическая дата внедрения',
+            'date_shl' => 'Дата отправления в ШЛ',
             'number_date_raport' => '№ и дата рапорта на перенос',
             'couse' => 'Причины не внедрения',
             'date_scheme' => 'Дата выдачи схем для монтажа',

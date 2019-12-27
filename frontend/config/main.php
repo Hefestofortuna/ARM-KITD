@@ -14,6 +14,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'defaultRoute' => 'site/login',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -26,6 +27,9 @@ return [
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
+        ],
+        'formatter' => [
+            'nullDisplay' => '<span class="not-set">Отсутсвует</span>',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

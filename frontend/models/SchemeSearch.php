@@ -11,14 +11,17 @@ use app\models\Scheme;
  */
 class SchemeSearch extends Scheme
 {
+    public $number_scheme;
+    public $date_utv;
+    public $date_fuck;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'number', 'id_station', 'result', 'page', 'id_author', 'id_org'], 'integer'],
-            [['date', 'scheme', 'descriptin', 'reason'], 'safe'],
+            [['id', 'number', 'id_station', 'result', 'page', 'id_author', 'id_org','number_scheme'], 'integer'],
+            [['date', 'scheme', 'descriptin', 'reason', 'date_utv','date_fuck'], 'safe'],
         ];
     }
 
@@ -45,6 +48,17 @@ class SchemeSearch extends Scheme
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>[
+                'attributes'=>[
+                ]
+            ]
+        ]);
+        $dataProvider->setSort([
+            'attributes' => array_merge($dataProvider->getSort()->attributes,[
+                'date_utv'=>[
+                ],
+                'date_fuck' =>[],
+            ]),
         ]);
 
         $this->load($params);
@@ -59,17 +73,22 @@ class SchemeSearch extends Scheme
         $query->andFilterWhere([
             'id' => $this->id,
             'number' => $this->number,
-            'date' => $this->date,
+            //'date' => $this->date,
             'id_station' => $this->id_station,
             'result' => $this->result,
             'page' => $this->page,
             'id_author' => $this->id_author,
+            'date_utv' =>$this->date_utv,
+            'date_fuck' =>$this->date_fuck,
             'id_org' => $this->id_org,
         ]);
 
         $query->andFilterWhere(['like', 'scheme', $this->scheme])
+            ->andFilterWhere(['like', 'date', $this->date])
             ->andFilterWhere(['like', 'descriptin', $this->descriptin])
             ->andFilterWhere(['like', 'reason', $this->reason])
+            ->andFilterWhere(['like', 'date_utv', $this->reason])
+            ->andFilterWhere(['like', 'shl.date_fuck', $this->reason])
             ;
 
         return $dataProvider;

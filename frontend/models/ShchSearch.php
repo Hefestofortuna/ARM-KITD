@@ -18,7 +18,7 @@ class ShchSearch extends Shch
     {
         return [
             [['id', 'number_scheme'], 'integer'],
-            [['date_shch', 'number_date_protocol', 'date_plan', 'date_fuck', 'number_date_raport', 'couse', 'date_scheme', 'otv', 'ispol', 'date_ex'], 'safe'],
+            [['date_shch', 'number_date_protocol', 'date_plan', 'date_fuck','date_shl', 'number_date_raport', 'couse', 'date_scheme', 'otv', 'ispol', 'date_ex'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class ShchSearch extends Shch
             'date_shch' => $this->date_shch,
             'date_plan' => $this->date_plan,
             'date_fuck' => $this->date_fuck,
+            'date_shl' => $this->date_shl,
             'date_scheme' => $this->date_scheme,
             'date_ex' => $this->date_ex,
         ]);

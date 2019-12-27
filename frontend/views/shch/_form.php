@@ -46,6 +46,15 @@ use \yii\helpers\ArrayHelper;
         ]
 ]);?>
 
+<?= $form->field($model, 'date_shl')->widget(DatePicker::className(), [
+        'value' => '02-16-2012',
+        'template' => '{addon}{input}',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-mm-dd'
+        ]
+]);?>
+
 <?= $form->field($model, 'number_date_raport')->textInput(['maxlength' => true]) ?>
 
         </div>

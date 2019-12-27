@@ -69,7 +69,7 @@ class SchemeController extends Controller
         $model = new Scheme();
         //$Shchmodel = new Shch();//Если 'new', то ActiveRecord = INSERT
         $model->id_org = Yii::$app->user->identity->org;
-        $model->result = 2;
+        $model->result = 0;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }

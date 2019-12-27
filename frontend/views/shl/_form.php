@@ -15,7 +15,7 @@ use \app\models\User;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php// $model->number_scheme != NULL ?  $form->field($model, 'number_scheme')->textInput(['readonly'=>true]) : $form->field($model, 'number_scheme')->textInput() ?>
+    <?php // $model->number_scheme != NULL ?  $form->field($model, 'number_scheme')->textInput(['readonly'=>true]) : $form->field($model, 'number_scheme')->textInput() ?>
     <div class="row">
         <div class="col-lg-6">            
             
@@ -28,7 +28,7 @@ use \app\models\User;
         ]
 ]);?>
 
-    <?= $form->field($model, 'result')->dropDownList(['2'=>'Опровергнуто','1'=>'Согласованно'])?>
+    <?= $form->field($model, 'result')->dropDownList(['0'=>'На рассмотрении','2'=>'Опровергнуто','1'=>'Согласованно'])?>
 
     <?= $form->field($model, 'date_utv')->widget(DatePicker::className(), [
         'value' => '02-16-2012',
