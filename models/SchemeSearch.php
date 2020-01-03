@@ -18,7 +18,7 @@ class SchemeSearch extends Scheme
     {
         return [
             [['id', 'number',  'result', 'page', 'id_author', 'id_org'], 'integer'],
-            [['date', 'scheme', 'descriptin', 'reason','id_station'], 'safe'],
+            [['id_station','date', 'scheme', 'descriptin', 'reason'], 'safe'],
         ];
     }
 
@@ -41,17 +41,12 @@ class SchemeSearch extends Scheme
     public function search($params)
     {
         $query = Scheme::find();
-        $query-> joinWith(['station']);
+        $query->joinWith('station');    
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>[
-                'defaultOrder' => [
-                    'id' => SORT_DESK
-                ]
-            ]
         ]);
 
         $this->load($params);
@@ -67,19 +62,17 @@ class SchemeSearch extends Scheme
             'id' => $this->id,
             'number' => $this->number,
             'date' => $this->date,
-            //'id_station' => $this->id_station,
             'result' => $this->result,
             'page' => $this->page,
             'id_author' => $this->id_author,
-            'id_org' => $this->id_org,
-        ]);//Жесткие совпадения
+            'scheme.id_org' => $this->id_org,//"scheme.id_org" в обяз, ибо в station.* тоже есть id_org.
+        ]);
 
         $query->andFilterWhere(['like', 'scheme', $this->scheme])
             ->andFilterWhere(['like', 'descriptin', $this->descriptin])
             ->andFilterWhere(['like', 'reason', $this->reason])
             ->andFilterWhere(['like', 'station.name', $this->id_station])
-            ;//Не жесткие совпадения
-            
+            ;
 
         return $dataProvider;
     }

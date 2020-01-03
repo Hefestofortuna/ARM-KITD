@@ -106,7 +106,7 @@ class SchemeController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['/site/index']);
+        return $this->redirect(['index']);
     }
 
     /**

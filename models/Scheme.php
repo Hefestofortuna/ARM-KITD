@@ -35,9 +35,9 @@ class Scheme extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['number', 'result', 'page', 'id_author', 'id_org'], 'integer'],
+            [['number', 'id_station', 'result', 'page', 'id_author', 'id_org'], 'integer'],
             [['date'], 'safe'],
-            [['scheme',  'id_station', 'descriptin', 'reason'], 'string', 'max' => 255],
+            [['scheme', 'descriptin', 'reason'], 'string', 'max' => 255],
         ];
     }
 
@@ -53,19 +53,15 @@ class Scheme extends \yii\db\ActiveRecord
             'id_station' => 'Станция',
             'scheme' => 'Наименование схемы',
             'descriptin' => 'Описание изменений',
-            'reason' => 'Основание внесение изменений',
-            'result' => 'Результат рповерки',
-            'page' => 'Станиц',
+            'reason' => 'Основание внесения изменений',
+            'result' => 'Результат проверки',
+            'page' => 'Страниц',
             'id_author' => 'Автор',
             'id_org' => 'Дистанция',
         ];
     }
     public function getStation()
     {
-        return $this->hasOne(Station::className(),['id'=>'id_station']);
-    }
-    public function getOrg()
-    {
-        return $this->hasOne(Org::className(),['id'=>'id_org']);
+        return $this->hasOne(Station::className(), ['id'=>'id_station']);
     }
 }

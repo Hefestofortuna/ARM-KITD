@@ -25,17 +25,30 @@ $this->title = 'АРМ-КИТД';
             //'id',
             'number',
             'id_org',
-            'date',
             [
                 'attribute' => 'id_station',
                 'content' => function($model){
                     return $model->station->name;
                 }
             ],
+            'date',
             'scheme',
             'descriptin',
             'reason',
-            'result',
+            [
+                'attribute' => 'result',
+                'filter'=>['0'=>'На рассмотрении','1'=>'Опровергнуто','2'=>'Согласованно'],
+                'headerOptions' => ['style' => 'width:11%'],
+                'content' => function($model){
+                    if($model->result == 1){
+                        return '<font color="red">Опровергнуто</font>';
+                    }elseif($model->result == 2){
+                        return '<font color="green">Согласованно</font>';
+                    }else{
+                      return '<font color="orange">На рассмотрении</font>';
+                    }
+                }
+            ],
             //'page',
             //'id_author',
 
