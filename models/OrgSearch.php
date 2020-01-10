@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\User;
+use app\models\Org;
 
 /**
- * UserSearch represents the model behind the search form of `app\models\User`.
+ * OrgSearch represents the model behind the search form of `app\models\Org`.
  */
-class UserSearch extends User
+class OrgSearch extends Org
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class UserSearch extends User
     {
         return [
             [['id'], 'integer'],
-            [['login', 'password', 'fio', 'id_post', 'id_org'], 'safe'],
+            [['title', 'code'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = Org::find();
 
         // add conditions that should always apply here
 
@@ -61,11 +61,8 @@ class UserSearch extends User
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'login', $this->login])
-            ->andFilterWhere(['like', 'password', $this->password])
-            ->andFilterWhere(['like', 'fio', $this->fio])
-            ->andFilterWhere(['like', 'id_post', $this->id_post])
-            ->andFilterWhere(['like', 'id_org', $this->id_org]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'code', $this->code]);
 
         return $dataProvider;
     }

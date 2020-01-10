@@ -35,7 +35,7 @@ class Scheme extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['number', 'id_station', 'result', 'page', 'id_author', 'id_org'], 'integer'],
+            [['id','number', 'id_station', 'result', 'page', 'id_author', 'id_org'], 'integer'],
             [['date'], 'safe'],
             [['scheme', 'descriptin', 'reason'], 'string', 'max' => 255],
         ];
@@ -58,10 +58,27 @@ class Scheme extends \yii\db\ActiveRecord
             'page' => 'Страниц',
             'id_author' => 'Автор',
             'id_org' => 'Дистанция',
+            'date_fuck' => 'Дата внедрения (фактическая)',
+            
         ];
     }
     public function getStation()
     {
         return $this->hasOne(Station::className(), ['id'=>'id_station']);
+    }
+
+    public function getOrg()
+    {
+        return $this->hasOne(Org::className(), ['id'=>'id_org']);
+    }
+
+    public function getShch()
+    {
+        return $this->hasOne(Shch::className(), ['number_scheme'=>'id']);
+    }
+
+    public function getShl()
+    {
+        return $this->hasOne(Shl::className(), ['number_scheme'=>'id']);
     }
 }

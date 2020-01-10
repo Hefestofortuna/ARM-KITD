@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Scheme;
+use Yii;
 
 /**
  * SchemeSearch represents the model behind the search form of `app\models\Scheme`.
@@ -17,8 +18,8 @@ class SchemeSearch extends Scheme
     public function rules()
     {
         return [
-            [['id', 'number',  'result', 'page', 'id_author', 'id_org'], 'integer'],
-            [['id_station','date', 'scheme', 'descriptin', 'reason'], 'safe'],
+            [['number',  'result', 'page', 'id_author', 'id_org'], 'integer'],
+            [['id', 'id_station','date', 'scheme', 'descriptin', 'reason'], 'safe'],
         ];
     }
 
@@ -41,7 +42,12 @@ class SchemeSearch extends Scheme
     public function search($params)
     {
         $query = Scheme::find();
-        $query->joinWith('station');    
+        $query->joinWith('station');
+        //$query->joinWith('shch');    
+        if(Yii::$app->user->identity->id_post == 1)
+        {
+            $query->where(['scheme.id_org' => Yii::$app->user->identity->id_org]);
+        };
 
         // add conditions that should always apply here
 
@@ -59,13 +65,13 @@ class SchemeSearch extends Scheme
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            //'shch.number_scheme' => $this->id,//в this указывается наименование столбца из DGV(вроде как)
             'number' => $this->number,
             'date' => $this->date,
             'result' => $this->result,
             'page' => $this->page,
             'id_author' => $this->id_author,
-            'scheme.id_org' => $this->id_org,//"scheme.id_org" в обяз, ибо в station.* тоже есть id_org.
+            'scheme.id_org' => $this->id_org,//"scheme.id_org" в обяз, ибо в station.* тоже есть id_org.            
         ]);
 
         $query->andFilterWhere(['like', 'scheme', $this->scheme])

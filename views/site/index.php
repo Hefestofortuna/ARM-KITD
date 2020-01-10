@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+use \yii\helpers\ArrayHelper;
+use \app\models\Org;
 
 
 /* @var $this yii\web\View */
@@ -14,8 +16,8 @@ $this->title = 'АРМ-КИТД';
     </div>
 -->
     <div class="body-content">
-
         <div class="row">
+        <?= Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) ?>
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -23,15 +25,38 @@ $this->title = 'АРМ-КИТД';
             //['class' => 'yii\grid\SerialColumn'],
 
             //'id',
+            [
+                'attribute' => 'id',
+                'content' => function($model){
+                    return $model->shch->date_fuck;
+                }
+            ],
+            [
+                'attribute' => 'id',
+                'content' => function($model){
+                    return $model->shl->date_utv;
+                }
+            ],
             'number',
-            'id_org',
+            [
+                'attribute' => 'id_org',
+                'filter'=>ArrayHelper::map(Org::find()->all(),'id','code'),
+                'content' => function($model){
+                    return $model->org->code;
+                },
+                'visible' => Yii::$app->user->identity->id_post != 1,
+            ],
             [
                 'attribute' => 'id_station',
                 'content' => function($model){
                     return $model->station->name;
                 }
             ],
-            'date',
+            [
+                'attribute'=>'date',
+                //'headerOptions' => ['style' => 'width: 5%'],
+                'format' => ['date', 'dd.MM.yyyy'],
+            ],
             'scheme',
             'descriptin',
             'reason',

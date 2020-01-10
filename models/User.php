@@ -11,8 +11,8 @@ use Yii;
  * @property string|null $login
  * @property string|null $password
  * @property string|null $fio
- * @property string|null $post
- * @property string|null $org
+ * @property string|null $id_post
+ * @property string|null $id_org
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -31,7 +31,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['login', 'password', 'fio'], 'string', 'max' => 64],
-            [['post', 'org'], 'string', 'max' => 16],
+            [['id_post', 'id_org'], 'string', 'max' => 16],
         ];
     }
 
@@ -45,10 +45,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'login' => 'Логин',
             'password' => 'Пароль',
             'fio' => 'ФИО',
-            'post' => 'Должность',
-            'org' => 'Организация',
+            'id_post' => 'Должность',
+            'id_org' => 'Организация',
         ];
     }
+
+    public function getOrg()
+    {
+        return $this->hasOne(Org::className(), ['id'=>'id_org']);
+    }
+
     public static function findIdentity($id)
     {
         //return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;

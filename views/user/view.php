@@ -34,8 +34,27 @@ $this->title = $model->fio;
                     'login',
                     'password',
                     'fio',
-                    'post',
-                    'org',
+                    [
+                        'attribute' => 'id_post',
+                        'value' => function($model)
+                        {
+                            if($model->id_post == 2)
+                            {
+                                return 'ШЛ';
+                            } 
+                            elseif($model->id_post == 1)
+                            {
+                                return 'ШЧ';
+                            }
+                        }
+                    ],
+                    [
+                        'attribute' => 'id_org',
+                        'value' => function($model)
+                        {
+                            return $model->org->code;
+                        }
+                    ],
                 ],
             ]) ?>
         </div>
