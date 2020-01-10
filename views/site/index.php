@@ -26,13 +26,15 @@ $this->title = 'АРМ-КИТД';
 
             //'id',
             [
-                'attribute' => 'id',
+                'attribute' => 'id_shch',
+                'header'=> 'Дата внедрения',
                 'content' => function($model){
                     return $model->shch->date_fuck;
                 }
             ],
             [
-                'attribute' => 'id',
+                'attribute' => 'id_shl',
+                'header'=> 'Дата утверждения',
                 'content' => function($model){
                     return $model->shl->date_utv;
                 }

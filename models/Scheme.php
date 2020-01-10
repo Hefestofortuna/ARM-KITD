@@ -9,6 +9,8 @@ use Yii;
  *
  * @property int $id
  * @property int|null $number
+ * @property int|null $id_shch
+ * @property int|null $id_shl
  * @property string|null $date
  * @property int|null $id_station
  * @property string|null $scheme
@@ -35,7 +37,7 @@ class Scheme extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id','number', 'id_station', 'result', 'page', 'id_author', 'id_org'], 'integer'],
+            [['number', 'id_shch', 'id_shl', 'id_station', 'result', 'page', 'id_author', 'id_org'], 'integer'],
             [['date'], 'safe'],
             [['scheme', 'descriptin', 'reason'], 'string', 'max' => 255],
         ];
@@ -49,6 +51,8 @@ class Scheme extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'number' => '№',
+            'id_shch' => 'Id Shch',
+            'id_shl' => 'Id Shl',
             'date' => 'Дата внесения в АРМ',
             'id_station' => 'Станция',
             'scheme' => 'Наименование схемы',
@@ -58,10 +62,9 @@ class Scheme extends \yii\db\ActiveRecord
             'page' => 'Страниц',
             'id_author' => 'Автор',
             'id_org' => 'Дистанция',
-            'date_fuck' => 'Дата внедрения (фактическая)',
-            
         ];
     }
+
     public function getStation()
     {
         return $this->hasOne(Station::className(), ['id'=>'id_station']);

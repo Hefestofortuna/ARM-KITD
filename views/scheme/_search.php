@@ -19,11 +19,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'number') ?>
 
+    <?= $form->field($model, 'id_shch') ?>
+
+    <?= $form->field($model, 'id_shl') ?>
+
     <?= $form->field($model, 'date') ?>
 
-    <?= $form->field($model, 'id_station') ?>
+    <?php // echo $form->field($model, 'id_station') ?>
 
-    <?= $form->field($model, 'scheme') ?>
+    <?php // echo $form->field($model, 'scheme') ?>
 
     <?php // echo $form->field($model, 'descriptin') ?>
 

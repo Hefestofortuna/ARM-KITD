@@ -14,6 +14,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'number')->textInput() ?>
 
+    <?= $form->field($model, 'id_shch')->textInput() ?>
+
+    <?= $form->field($model, 'id_shl')->textInput() ?>
+
     <?= $form->field($model, 'date')->textInput() ?>
 
     <?= $form->field($model, 'id_station')->textInput() ?>

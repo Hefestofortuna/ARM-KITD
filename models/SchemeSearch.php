@@ -5,7 +5,6 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Scheme;
-use Yii;
 
 /**
  * SchemeSearch represents the model behind the search form of `app\models\Scheme`.
@@ -18,8 +17,8 @@ class SchemeSearch extends Scheme
     public function rules()
     {
         return [
-            [['number',  'result', 'page', 'id_author', 'id_org'], 'integer'],
-            [['id', 'id_station','date', 'scheme', 'descriptin', 'reason'], 'safe'],
+            [['id', 'number', 'id_shch', 'id_shl', 'id_station', 'result', 'page', 'id_author', 'id_org'], 'integer'],
+            [['date', 'scheme', 'descriptin', 'reason'], 'safe'],
         ];
     }
 
@@ -42,12 +41,6 @@ class SchemeSearch extends Scheme
     public function search($params)
     {
         $query = Scheme::find();
-        $query->joinWith('station');
-        //$query->joinWith('shch');    
-        if(Yii::$app->user->identity->id_post == 1)
-        {
-            $query->where(['scheme.id_org' => Yii::$app->user->identity->id_org]);
-        };
 
         // add conditions that should always apply here
 
@@ -65,20 +58,21 @@ class SchemeSearch extends Scheme
 
         // grid filtering conditions
         $query->andFilterWhere([
-            //'shch.number_scheme' => $this->id,//в this указывается наименование столбца из DGV(вроде как)
+            'id' => $this->id,
             'number' => $this->number,
+            'id_shch' => $this->id_shch,
+            'id_shl' => $this->id_shl,
             'date' => $this->date,
+            'id_station' => $this->id_station,
             'result' => $this->result,
             'page' => $this->page,
             'id_author' => $this->id_author,
-            'scheme.id_org' => $this->id_org,//"scheme.id_org" в обяз, ибо в station.* тоже есть id_org.            
+            'id_org' => $this->id_org,
         ]);
 
         $query->andFilterWhere(['like', 'scheme', $this->scheme])
             ->andFilterWhere(['like', 'descriptin', $this->descriptin])
-            ->andFilterWhere(['like', 'reason', $this->reason])
-            ->andFilterWhere(['like', 'station.name', $this->id_station])
-            ;
+            ->andFilterWhere(['like', 'reason', $this->reason]);
 
         return $dataProvider;
     }
