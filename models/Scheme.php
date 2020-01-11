@@ -51,8 +51,8 @@ class Scheme extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'number' => '№',
-            'id_shch' => 'Id Shch',
-            'id_shl' => 'Id Shl',
+            'id_shch' => 'Дата внедрения (фактическая)',
+            'id_shl' => 'Дата утверждения',
             'date' => 'Дата внесения в АРМ',
             'id_station' => 'Станция',
             'scheme' => 'Наименование схемы',
@@ -77,11 +77,11 @@ class Scheme extends \yii\db\ActiveRecord
 
     public function getShch()
     {
-        return $this->hasOne(Shch::className(), ['number_scheme'=>'id']);
+        return $this->hasOne(Shch::className(), ['number_scheme'=>'id_shch']);
     }
 
     public function getShl()
     {
-        return $this->hasOne(Shl::className(), ['number_scheme'=>'id']);
+        return $this->hasOne(Shl::className(), ['number_scheme'=>'id_shl']);
     }
 }

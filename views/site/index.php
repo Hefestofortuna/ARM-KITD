@@ -20,25 +20,11 @@ $this->title = 'АРМ-КИТД';
         <?= Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) ?>
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,'options' => ['style' => 'max-width: 100%;'],//Очень годно!Не дает выйти гриду за пределы экрана
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            [
-                'attribute' => 'id_shch',
-                'header'=> 'Дата внедрения',
-                'content' => function($model){
-                    return $model->shch->date_fuck;
-                }
-            ],
-            [
-                'attribute' => 'id_shl',
-                'header'=> 'Дата утверждения',
-                'content' => function($model){
-                    return $model->shl->date_utv;
-                }
-            ],
             'number',
             [
                 'attribute' => 'id_org',
@@ -63,6 +49,19 @@ $this->title = 'АРМ-КИТД';
             'descriptin',
             'reason',
             [
+                'attribute' => 'id_shch',
+
+                'content' => function($model){
+                    return Yii::$app->formatter->asDate($model->shch->date_fuck, 'dd.MM.yyyy');
+                }
+            ],
+            [
+                'attribute' => 'id_shl',
+                'content' => function($model){
+                    return Yii::$app->formatter->asDate($model->shl->date_utv, 'dd.MM.yyyy');
+                }
+            ],
+            [
                 'attribute' => 'result',
                 'filter'=>['0'=>'На рассмотрении','1'=>'Опровергнуто','2'=>'Согласованно'],
                 'headerOptions' => ['style' => 'width:11%'],
@@ -72,7 +71,7 @@ $this->title = 'АРМ-КИТД';
                     }elseif($model->result == 2){
                         return '<font color="green">Согласованно</font>';
                     }else{
-                      return '<font color="orange">На рассмотрении</font>';
+                        return '<font color="orange">На рассмотрении</font>';
                     }
                 }
             ],
