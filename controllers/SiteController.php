@@ -52,12 +52,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SchemeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('index',[
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            $searchModel = new SchemeSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -71,9 +77,15 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            Yii::$app->user->logout();
 
-        return $this->goHome();
+            return $this->goHome();
+        }
     }
 
     /**
@@ -83,15 +95,21 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
+        else {
+            $model = new ContactForm();
+            if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('contactFormSubmitted');
+
+                return $this->refresh();
+            }
+            return $this->render('contact', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -101,6 +119,12 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            return $this->render('about');
+        }
     }
 }

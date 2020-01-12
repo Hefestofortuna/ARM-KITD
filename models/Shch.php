@@ -50,18 +50,18 @@ class Shch extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'number_scheme' => 'Number Scheme',
-            'date_shch' => 'Date Shch',
-            'number_date_protocol' => 'Number Date Protocol',
-            'date_plan' => 'Date Plan',
-            'date_fuck' => 'Дата внедрения (фактическая)',
-            'date_shl' => 'Date Shl',
-            'number_date_raport' => 'Number Date Raport',
-            'couse' => 'Couse',
-            'date_scheme' => 'Date Scheme',
-            'otv' => 'Otv',
-            'ispol' => 'Ispol',
-            'date_ex' => 'Date Ex',
+            'number_scheme' => 'Номер схемы',
+            'date_shch' => 'Дата поступления в ШЧ утвержденных изменений',
+            'number_date_protocol' => '№ и дата протокола',
+            'date_plan' => 'Плановая дата внедрения',
+            'date_fuck' => 'Фактическая дата внедрения',
+            'date_shl' => 'Дата отправления в ШЛ',
+            'number_date_raport' => '№ и дата рапорта на перенос',
+            'couse' => 'Причины не внедрения',
+            'date_scheme' => 'Дата выдачи схем для монтажа',
+            'otv' => 'Должность, ФИО отвественного',
+            'ispol' => 'Должность, ФИО исполнителя',
+            'date_ex' => 'Дата переноса в экземпляр участка',
         ];
     }
 }

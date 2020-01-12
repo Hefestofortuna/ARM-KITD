@@ -77,11 +77,32 @@ class Scheme extends \yii\db\ActiveRecord
 
     public function getShch()
     {
-        return $this->hasOne(Shch::className(), ['number_scheme'=>'id_shch']);
+        return $this->hasOne(Shch::className(), ['id'=>'id_shch']);
     }
 
     public function getShl()
     {
-        return $this->hasOne(Shl::className(), ['number_scheme'=>'id_shl']);
+        return $this->hasOne(Shl::className(), ['id'=>'id_shl']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($insert){
+            $shch_model = new Shch();
+            $shl_model = new Shl();
+            $shl_model->number_scheme = $this->id;
+            $shl_model->result = 0;
+            $shch_model->number_scheme = $this->id;
+            $this->id_shl = $this->id;
+            $shl_model->save();
+            $shch_model->save();
+            $this->id_shch = $shch_model->id;
+            $this->id_shl = $shl_model->id;
+            $this->save();
+            return $this->number;
+        }
+        else{
+            return $this->number;
+        }
     }
 }

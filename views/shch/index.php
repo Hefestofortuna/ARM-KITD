@@ -4,18 +4,18 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\SchemeSearch */
+/* @var $searchModel app\models\ShchSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Schemes';
+$this->title = 'Shches';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="scheme-index">
+<div class="shch-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Scheme', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Shch', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,18 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'number',
-            'id_shch',
-            'id_shl',
-            'date',
-            //'id_station',
-            //'scheme',
-            //'descriptin',
-            //'reason',
-            //'result',
-            //'page',
-            //'id_author',
-            //'id_org',
+            'number_scheme',
+            'date_shch',
+            'number_date_protocol',
+            'date_plan',
+            //'date_fuck',
+            //'date_shl',
+            //'number_date_raport',
+            //'couse',
+            //'date_scheme',
+            //'otv',
+            //'ispol',
+            //'date_ex',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

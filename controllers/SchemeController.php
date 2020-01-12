@@ -35,13 +35,17 @@ class SchemeController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SchemeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (Yii::$app->user->isGuest) {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        } else {
+            $searchModel = new SchemeSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -52,9 +56,15 @@ class SchemeController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -64,15 +74,23 @@ class SchemeController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Scheme();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        else {
+            $model = new Scheme();
+            $model->id_org = Yii::$app->user->identity->id_org;
+            $model->result = 0;
+            $model->number = Scheme::find()->where(['id_org' => Yii::$app->user->identity->org])->max('number') + 1;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -84,15 +102,21 @@ class SchemeController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        else {
+            $model = $this->findModel($id);
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -104,9 +128,15 @@ class SchemeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -118,10 +148,16 @@ class SchemeController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Scheme::findOne($id)) !== null) {
-            return $model;
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        else {
+            if (($model = Scheme::findOne($id)) !== null) {
+                return $model;
+            }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }
