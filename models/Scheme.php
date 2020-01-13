@@ -52,17 +52,21 @@ class Scheme extends \yii\db\ActiveRecord
             'id' => 'ID',
             'number' => '№',
             'id_shch' => 'Дата внедрения (фактическая)',
-            'id_shl' => 'Дата утверждения',
-            'date' => 'Дата внесения в АРМ',
+            'id_shl' => 'Дата утверждения изменения',
+            'date' => 'Дата внесения изменения в АРМ',
             'id_station' => 'Станция',
             'scheme' => 'Наименование схемы',
             'descriptin' => 'Описание изменений',
             'reason' => 'Основание внесения изменений',
             'result' => 'Результат проверки',
-            'page' => 'Страниц',
-            'id_author' => 'Автор',
-            'id_org' => 'Дистанция',
+            'page' => 'Количество листов',
+            'id_author' => 'Изменения внес ШЧ',
+            'id_org' => 'Дитанция',
         ];
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(),['id'=>'id_author']);
     }
 
     public function getStation()

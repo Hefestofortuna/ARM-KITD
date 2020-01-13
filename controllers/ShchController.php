@@ -33,16 +33,24 @@ class ShchController extends Controller
      * Lists all Shch models.
      * @return mixed
      */
+    /*
     public function actionIndex()
     {
-        $searchModel = new ShchSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            $searchModel = new ShchSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
+    */
 
     /**
      * Displays a single Shch model.
@@ -50,31 +58,45 @@ class ShchController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+    /*
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
-
+*/
     /**
      * Creates a new Shch model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+    /*
     public function actionCreate()
     {
-        $model = new Shch();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        else {
+            $model = new Shch();
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
-
+*/
     /**
      * Updates an existing Shch model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -84,15 +106,21 @@ class ShchController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/scheme/view', 'id' => $model->number_scheme]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        elseif(Yii::$app->user->identity->id_post == 1) {
+            $model = $this->findModel($id);
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['/scheme/view', 'id' => $model->number_scheme]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -102,13 +130,20 @@ class ShchController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+    /*
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
-
+*/
     /**
      * Finds the Shch model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -118,10 +153,16 @@ class ShchController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Shch::findOne($id)) !== null) {
-            return $model;
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        else {
+            if (($model = Shch::findOne($id)) !== null) {
+                return $model;
+            }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Org;
-use app\models\OrgSearch;
+use app\models\Shl;
+use app\models\ShlSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OrgController implements the CRUD actions for Org model.
+ * ShlController implements the CRUD actions for Shl model.
  */
-class OrgController extends Controller
+class ShlController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,71 +30,59 @@ class OrgController extends Controller
     }
 
     /**
-     * Lists all Org models.
+     * Lists all Shl models.
      * @return mixed
      */
+    /*
     public function actionIndex()
     {
-        if(Yii::$app->user->isGuest)
-        {
-            return Yii::$app->getResponse()->redirect(array('user/login'));
-        }
-        else {
-            $searchModel = new OrgSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new ShlSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
-        }
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
+    */
 
     /**
-     * Displays a single Org model.
+     * Displays a single Shl model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+    /*
     public function actionView($id)
     {
-        if(Yii::$app->user->isGuest)
-        {
-            return Yii::$app->getResponse()->redirect(array('user/login'));
-        }
-        else {
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
+    */
 
     /**
-     * Creates a new Org model.
+     * Creates a new Shl model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+    /*
     public function actionCreate()
     {
-        if(Yii::$app->user->isGuest)
-        {
-            return Yii::$app->getResponse()->redirect(array('user/login'));
-        }
-        else {
-            $model = new Org();
+        $model = new Shl();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
+    */
 
     /**
-     * Updates an existing Org model.
+     * Updates an existing Shl model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -106,11 +94,11 @@ class OrgController extends Controller
         {
             return Yii::$app->getResponse()->redirect(array('user/login'));
         }
-        else {
+        elseif(Yii::$app->user->identity->id_post == 2) {
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['/scheme/view', 'id' => $model->number_scheme]);
             }
 
             return $this->render('update', [
@@ -120,7 +108,7 @@ class OrgController extends Controller
     }
 
     /**
-     * Deletes an existing Org model.
+     * Deletes an existing Shl model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -140,10 +128,10 @@ class OrgController extends Controller
     }
 
     /**
-     * Finds the Org model based on its primary key value.
+     * Finds the Shl model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Org the loaded model
+     * @return Shl the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
@@ -153,7 +141,7 @@ class OrgController extends Controller
             return Yii::$app->getResponse()->redirect(array('user/login'));
         }
         else {
-            if (($model = Org::findOne($id)) !== null) {
+            if (($model = Shl::findOne($id)) !== null) {
                 return $model;
             }
 

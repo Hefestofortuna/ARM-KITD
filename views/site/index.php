@@ -17,7 +17,9 @@ $this->title = 'АРМ-КИТД';
 -->
     <div class="body-content">
         <div class="row">
-        <?= Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) ?>
+        <?= Yii::$app->user->identity->id_post != "2" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null ?>
+        <?= Yii::$app->user->identity->id_post != "1" ? Html::a('Формирование отчета', ['', 'id' => $model->id], ['class' => 'btn btn-primary btn btn-block']) : null ?>
+
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,'options' => ['style' => 'max-width: 100%;'],//Очень годно!Не дает выйти гриду за пределы экрана
@@ -63,15 +65,15 @@ $this->title = 'АРМ-КИТД';
             ],
             [
                 'attribute' => 'result',
-                'filter'=>['0'=>'На рассмотрении','1'=>'Опровергнуто','2'=>'Согласованно'],
+                'filter'=>['0'=>'На рассмотрении','1'=>'Возвращено','2'=>'Утверждено'],
                 'headerOptions' => ['style' => 'width:11%'],
                 'content' => function($model){
                     if($model->result == 1){
-                        return '<font color="red">Опровергнуто</font>';
+                        return '<font color="red">Возвращено</font>';
                     }elseif($model->result == 2){
-                        return '<font color="green">Согласованно</font>';
+                        return '<font color="green">Утверждено</font>';
                     }else{
-                        return '<font color="orange">На рассмотрении</font>';
+                      return '<font color="orange">На рассмотрении</font>';
                     }
                 }
             ],
