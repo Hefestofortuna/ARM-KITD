@@ -51,6 +51,9 @@ class SchemeSearch extends Scheme
         {
             $query->where(['scheme.id_org' => Yii::$app->user->identity->id_org]);
         };
+        $query->orderBy([
+           'id'=>SORT_DESC,
+        ]);
 
         // add conditions that should always apply here
 

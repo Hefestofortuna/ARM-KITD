@@ -4,6 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\User;
 use app\models\Station;
+use app\models\ShchHistory;
+use yii\bootstrap\modal;
+use yii\widgets\ListView;
+use yii\data\ActiveDataProvider;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Scheme */
@@ -17,6 +21,10 @@ $shl_fio = User::findOne([
     'id' => $model->shl->fix_serch,
 ]
 );
+$ShchHistory_cout = ShchHistory::find()
+    ->where(['id_shch' => $model->id_shch])
+    ->count()
+;
 ?>
 <div class="scheme-view">
 
@@ -76,7 +84,43 @@ $shl_fio = User::findOne([
                     <li class="list-group-item">Результат проверки: <?php  if($model->result == 1){echo '<font color="red">Возвращено</font>';}elseif($model->result ==2){echo '<font color="green">Утверждено</font>';}else{echo '<font color="orange">На рассмотрении</font>';} ?></li>
                     <li class="list-group-item"><?= Html::encode("Количство листов: " . $model->page) ?></li>
                     <li class="list-group-item"><?= Html::encode("Изменения внес ШЧ : " . $model->user->fio/*$shch_fio->fio*/) ?></li>
-                    <a href="#" class="list-group-item">Внесенных изменений в ШЧ:<span class="badge">32</span></a>
+                    <li class="list-group-item">Внесенных изменений в ШЧ:
+                        <?php Modal::begin([
+                            'header' => '<h2>Изменения внесенные ШЧ</h2>',
+                            'toggleButton' => ['label' => $ShchHistory_cout,'class'=>'badge',],
+                        ]);
+                        $dataProvider = new ActiveDataProvider([
+                            'query' => ShchHistory::find()->where(['id_shch'=>$model->id_shch])->orderBy([
+                                'id'=>SORT_DESC,
+                            ]),
+                            'pagination' => [
+                                'pageSize' => 20,
+                            ],
+                        ]);
+                        ?><table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Время</th>
+                                <th scope="col">Тип изменения</th>
+                                <th scope="col">Старая запись</th>
+                                <th scope="col">Новая запись</th>
+                            </tr>
+                            </thead>
+                            <tbody><?php
+                        echo ListView::widget([
+                            'dataProvider' => $dataProvider,
+                            'layout' => "{pager}\n{summary}\n{items}\n{pager}",
+                            'itemView' => '_post',
+                        ]);
+                        ?>
+
+                            </tbody>
+
+
+                        </table>
+                        <?php
+                        Modal::end();
+                        ?></span></li>
                     <li class="list-group-item">
                         <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [

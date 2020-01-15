@@ -88,6 +88,10 @@ class Scheme extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Shl::className(), ['id'=>'id_shl']);
     }
+    public function getShch_history()
+    {
+        return $this->hasOne(ShchHistory::className(), ['id'=>'id_shch']);
+    }
 
     public function afterSave($insert, $changedAttributes)
     {
