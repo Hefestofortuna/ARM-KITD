@@ -76,6 +76,7 @@ $shl_fio = User::findOne([
                     <li class="list-group-item">Результат проверки: <?php  if($model->result == 1){echo '<font color="red">Возвращено</font>';}elseif($model->result ==2){echo '<font color="green">Утверждено</font>';}else{echo '<font color="orange">На рассмотрении</font>';} ?></li>
                     <li class="list-group-item"><?= Html::encode("Количство листов: " . $model->page) ?></li>
                     <li class="list-group-item"><?= Html::encode("Изменения внес ШЧ : " . $model->user->fio/*$shch_fio->fio*/) ?></li>
+                    <a href="#" class="list-group-item">Внесенных изменений в ШЧ:<span class="badge">32</span></a>
                     <li class="list-group-item">
                         <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
@@ -89,7 +90,6 @@ $shl_fio = User::findOne([
                 </ul>
             </div>
         </div>
-
     </div>
 </div>
 

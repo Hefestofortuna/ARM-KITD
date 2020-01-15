@@ -28,7 +28,7 @@ use \app\models\Scheme;
                 'format' => 'yyyy-mm-dd'
             ]
         ]);?>
-        <?= $form->field($model, 'id_station')->dropDownList(ArrayHelper::map(Station::find()->where(['id_org'=>Yii::$app->user->identity->org])->all(),'id','name'))?>
+        <?= $form->field($model, 'id_station')->dropDownList(ArrayHelper::map(Station::find()->where(['id_org'=>$model->id_org])->all(),'id','name'))?>
 
         <?= $form->field($model, 'scheme')->textarea(['maxlength' => true]) ?>
 
