@@ -46,15 +46,27 @@ class Shl extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'number_scheme' => 'Number Scheme',
-            'date_shl' => 'Date Shl',
-            'result' => 'Result',
-            'date_utv' => 'Date Utv',
-            'page_serch' => 'Page Serch',
-            'page_fix' => 'Page Fix',
-            'page_retur' => 'Page Retur',
-            'fix_serch' => 'Fix Serch',
-            'date_ex_sh' => 'Date Ex Sh',
+            'number_scheme' => 'Номер схемы',
+            'date_shl' => 'Дата поступления в ШЛ',
+            'result' => 'Результат проверки',
+            'date_utv' => 'Дата утверждения',
+            'page_serch' => 'Количество проверенных листов',
+            'page_fix' => 'Количество исправленных листов',
+            'page_retur' => 'Количество возвращенных листов',
+            'fix_serch' => 'Изменения проверил ШЛ',
+            'date_ex_sh' => 'Дата переноса в экземпляр Ш',
         ];
+    }
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($insert){
+            return $this->number_scheme;
+        }
+        else{
+            $scheme_model = Scheme::findOne(['id'=> $this->number_scheme] );
+            $scheme_model->result = $this->result;
+            $scheme_model->save();
+            return $this->number_scheme;
+        }
     }
 }

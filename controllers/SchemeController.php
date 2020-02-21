@@ -8,6 +8,7 @@ use app\models\SchemeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\ShchHistory;
 
 /**
  * SchemeController implements the CRUD actions for Scheme model.

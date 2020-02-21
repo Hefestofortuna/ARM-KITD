@@ -35,13 +35,19 @@ class OrgController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new OrgSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            $searchModel = new OrgSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -52,9 +58,15 @@ class OrgController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -64,15 +76,21 @@ class OrgController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Org();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        else {
+            $model = new Org();
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -84,15 +102,21 @@ class OrgController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        else {
+            $model = $this->findModel($id);
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -104,9 +128,15 @@ class OrgController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
+        }
+        else {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -118,10 +148,16 @@ class OrgController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Org::findOne($id)) !== null) {
-            return $model;
+        if(Yii::$app->user->isGuest)
+        {
+            return Yii::$app->getResponse()->redirect(array('user/login'));
         }
+        else {
+            if (($model = Org::findOne($id)) !== null) {
+                return $model;
+            }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

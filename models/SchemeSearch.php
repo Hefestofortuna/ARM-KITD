@@ -51,6 +51,9 @@ class SchemeSearch extends Scheme
         {
             $query->where(['scheme.id_org' => Yii::$app->user->identity->id_org]);
         };
+        $query->orderBy([
+           'id'=>SORT_DESC,
+        ]);
 
         // add conditions that should always apply here
 
@@ -72,7 +75,7 @@ class SchemeSearch extends Scheme
             'number' => $this->number,
             //'id_shch' => $this->id_shch,
             //'id_shl' => $this->id_shl,
-            'date' => $this->date,
+            //'date' => $this->date,
             //'id_station' => $this->id_station,
             'scheme.result' => $this->result,
             'page' => $this->page,
@@ -84,6 +87,7 @@ class SchemeSearch extends Scheme
         $query->andFilterWhere(['like', 'scheme', $this->scheme])
             ->andFilterWhere(['like', 'descriptin', $this->descriptin])
             ->andFilterWhere(['like', 'reason', $this->reason])
+            ->andFilterWhere(['like','date', $this->date])
             ->andFilterWhere(['like', 'station.name', $this->id_station])
             ->andFilterWhere(['like', 'shch.date_fuck', $this->id_shch])
             ->andFilterWhere(['like', 'shl.date_utv', $this->id_shl])
