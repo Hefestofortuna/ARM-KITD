@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use \app\models\Scheme;
+use \app\models\Shch;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Scheme */
@@ -16,6 +17,7 @@ $this->title = 'Добавление изменения с номером : ' . 
 
     <?= $this->render('_form', [
         'model' => $model,
+        'model_shch' => $model_shch,
     ]) ?>
 
 </div>

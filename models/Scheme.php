@@ -94,7 +94,7 @@ class Scheme extends \yii\db\ActiveRecord
         return $this->hasOne(ShchHistory::className(), ['id'=>'id_shch']);
     }
     
-    public function afterSave($insert, $changedAttributes)
+    /*public function afterSave($insert, $changedAttributes)
     {
         if($insert){
             $shch_model = new Shch();
@@ -114,4 +114,5 @@ class Scheme extends \yii\db\ActiveRecord
             return $this->number;
         }
     }
+    */
 }

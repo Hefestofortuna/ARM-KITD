@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Scheme;
 use app\models\SchemeSearch;
+use app\models\Shch;
+use app\models\Shl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -81,15 +83,26 @@ class SchemeController extends Controller
         }
         else {
             $model = new Scheme();
+            $model_shch = new Shch();
+            $model_shl = new Shl();
             $model->id_org = Yii::$app->user->identity->id_org;
             $model->result = 0;
             $model->number = Scheme::find()->where(['id_org' => Yii::$app->user->identity->org])->max('number') + 1;
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post()) && $model->save() && $model_shch->load(Yii::$app->request->post()) && $model_shch->save() ) {
+                $model_shch->number_scheme = $model->id;
+                $model_shch->save();
+                $model_shl->number_scheme = $model->id;
+                $model_shl->result = 0;
+                $model_shl->save();
+                $model->id_shl = $model_shl->id;
+                $model->id_shch = $model_shch->id;
+                $model->save();
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-
             return $this->render('create', [
                 'model' => $model,
+                'model_shch' => $model_shch,
             ]);
         }
     }
