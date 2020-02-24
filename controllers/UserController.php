@@ -40,7 +40,7 @@ class UserController extends Controller
         {
             return Yii::$app->getResponse()->redirect(array('user/login'));
         }
-        else{
+        elseif(Yii::$app->user->identity->id_post == 2){
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

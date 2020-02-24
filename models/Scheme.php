@@ -39,7 +39,7 @@ class Scheme extends \yii\db\ActiveRecord
         return [
             [['number', 'id_shch', 'id_shl', 'id_station', 'result', 'page', 'id_author', 'id_org'], 'integer'],
             [['date'], 'safe'],
-            [['scheme', 'descriptin', 'reason'], 'string', 'max' => 255],
+            [['scheme', 'descriptin', 'reason'], 'string', 'max' => 756],
         ];
     }
 
@@ -88,11 +88,12 @@ class Scheme extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Shl::className(), ['id'=>'id_shl']);
     }
+
     public function getShch_history()
     {
         return $this->hasOne(ShchHistory::className(), ['id'=>'id_shch']);
     }
-
+    
     public function afterSave($insert, $changedAttributes)
     {
         if($insert){

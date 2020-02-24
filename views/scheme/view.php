@@ -82,26 +82,25 @@ $ShchHistory_cout = ShchHistory::find()
                     <li class="list-group-item"><?= Html::encode("Описание изменений : " . $model->descriptin) ?></li>
                     <li class="list-group-item"><?= Html::encode("Основание внесения изменений : " . $model->reason) ?></li>
                     <li class="list-group-item">Результат проверки: <?php  if($model->result == 1){echo '<font color="red">Возвращено</font>';}elseif($model->result ==2){echo '<font color="green">Утверждено</font>';}else{echo '<font color="orange">На рассмотрении</font>';} ?></li>
-                    <li class="list-group-item"><?= Html::encode("Количство листов: " . $model->page) ?></li>
+                    <li class="list-group-item"><?= Html::encode("Количество листов: " . $model->page) ?></li>
                     <li class="list-group-item"><?= Html::encode("Изменения внес ШЧ : " . $model->user->fio/*$shch_fio->fio*/) ?></li>
                     <?php if(Yii::$app->user->identity->id_post == 2)
                     {
-                    ?>
+                        ?>
                     <li class="list-group-item">Внесенных изменений в ШЧ:
                         <?php Modal::begin([
                             'header' => '<h2>Изменения внесенные ШЧ</h2>',
-                            'toggleButton' => ['label' => $ShchHistory_cout, 'class' => 'badge',],
+                            'toggleButton' => ['label' => $ShchHistory_cout,'class'=>'badge',],
                         ]);
                         $dataProvider = new ActiveDataProvider([
-                            'query' => ShchHistory::find()->where(['id_shch' => $model->id_shch])->orderBy([
-                                'id' => SORT_DESC,
+                            'query' => ShchHistory::find()->where(['id_shch'=>$model->id_shch])->orderBy([
+                                'id'=>SORT_DESC,
                             ]),
                             'pagination' => [
                                 'pageSize' => 20,
                             ],
                         ]);
-                        ?>
-                        <table class="table">
+                        ?><table class="table">
                             <thead>
                             <tr>
                                 <th scope="col">Время</th>
@@ -111,11 +110,11 @@ $ShchHistory_cout = ShchHistory::find()
                             </tr>
                             </thead>
                             <tbody><?php
-                            echo ListView::widget([
-                                'dataProvider' => $dataProvider,
-                                'itemView' => '_post',
-                            ]);
-                            ?>
+                        echo ListView::widget([
+                            'dataProvider' => $dataProvider,
+                            'itemView' => '_post',
+                        ]);
+                        ?>
 
                             </tbody>
 
@@ -123,10 +122,11 @@ $ShchHistory_cout = ShchHistory::find()
                         </table>
                         <?php
                         Modal::end();
-                        }
-                        else{
-                        echo "";
-                        }
+                    }
+                    else
+                    {
+
+                    }
                         ?></span></li>
                     <li class="list-group-item">
                         <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -141,6 +141,7 @@ $ShchHistory_cout = ShchHistory::find()
                 </ul>
             </div>
         </div>
+
     </div>
 </div>
 

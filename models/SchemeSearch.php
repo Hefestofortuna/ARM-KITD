@@ -52,7 +52,7 @@ class SchemeSearch extends Scheme
             $query->where(['scheme.id_org' => Yii::$app->user->identity->id_org]);
         };
         $query->orderBy([
-           'id'=>SORT_DESC,
+            'id'=>SORT_DESC    //Ну а это соритровка по ID(Все айдишники с наибольшим занчением находятся сверху)
         ]);
 
         // add conditions that should always apply here

@@ -3,8 +3,6 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use \yii\helpers\ArrayHelper;
 use \app\models\Org;
-use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\Autoloader;
 
 
 /* @var $this yii\web\View */
