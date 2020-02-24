@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Scheme;
+use app\models\Shl;
 use app\models\Shch;
 use app\models\ShchSearch;
 use yii\web\Controller;
@@ -114,6 +116,22 @@ class ShchController extends Controller
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $model_scheme = Scheme::findOne(['id'=> $model->number_scheme]);
+                $model_shl = Shl::findOne(['number_scheme' =>$model->number_scheme]);
+                if($model->date_shl != "")
+                {
+                    $model_shl->result = 3;
+                    $model_scheme->result = 3;
+                    $model_shl->save();
+                    $model_scheme->save();
+                }
+                elseif($model->date_shl == "")
+                {
+                    $model_shl->result = 4;
+                    $model_scheme->result = 4;
+                    $model_shl->save();
+                    $model_scheme->save();
+                }
                 return $this->redirect(['/scheme/view', 'id' => $model->number_scheme]);
             }
 

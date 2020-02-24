@@ -68,13 +68,27 @@ $this->title = 'АРМ-КИТД';
                 'filter'=>['0'=>'На рассмотрении','1'=>'Возвращено','2'=>'Утверждено'],
                 'headerOptions' => ['style' => 'width:11%'],
                 'content' => function($model){
-                    if($model->result == 1){
+                    if($model->result == 1)
+                    {
                         return '<font color="red">Возвращено</font>';
-                    }elseif($model->result == 2){
-                        return '<font color="green">Утверждено</font>';
-                    }else{
-                      return '<font color="orange">На рассмотрении</font>';
                     }
+                    elseif($model->result ==2)
+                    {
+                        return '<font color="green">Утверждено</font>';
+                    }
+                    elseif($model->result ==0)
+                    {
+                        return '<font color="orange">На рассмотрении</font>';
+                    }
+                    elseif($model->result == 3)
+                    {
+                        return '<font color="#6495ed">На Отправлено в ШЛ</font>';
+                    }
+                    elseif($model->result == 4)
+                    {
+                        return '<font color=purple>В работе</font>';
+                    }
+
                 }
             ],
             //'page',

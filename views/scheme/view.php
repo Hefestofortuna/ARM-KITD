@@ -60,7 +60,28 @@ $ShchHistory_cout = ShchHistory::find()
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-success">Информация от ШЛ</li>
                     <li class="list-group-item"><?= "Дата поступления изменений в ШЛ: " . Yii::$app->formatter->asDate($model->shl->date_shl, 'dd.MM.yyyy') ?></li>
-                    <li class="list-group-item">Результат проверки: <?php  if($model->result == 1){echo '<font color="red">Возвращено</font>';}elseif($model->result ==2){echo '<font color="green">Утверждено</font>';}else{echo '<font color="orange">На рассмотрении</font>';} ?></li>
+                    <li class="list-group-item">Результат проверки: <?php
+                        if($model->result == 1)
+                    {echo '<font color="red">Возвращено</font>';
+                    }
+                    elseif($model->result ==2)
+                    {
+                        echo '<font color="green">Утверждено</font>';
+                    }
+                    elseif($model->result ==0)
+                    {
+                        echo '<font color="orange">На рассмотрении</font>';
+                    }
+                    elseif($model->result == 3)
+                    {
+                        echo '<font color="#6495ed">На Отправлено в ШЛ</font>';
+                    }
+                    elseif($model->result == 4)
+                    {
+                        echo '<font color=purple>В работе</font>';
+                    }
+                    ?>
+                    </li>
                     <li class="list-group-item"><?= "Дата утверждения изменений: " . Yii::$app->formatter->asDate($model->shl->date_utv, 'dd.MM.yyyy') ?></li>
                     <li class="list-group-item"><?= "Количество проверенных листов: " . $model->shl->page_serch ?></li>
                     <li class="list-group-item"><?= "Количество исправленных листов: " . $model->shl->page_fix ?></li>
@@ -81,7 +102,28 @@ $ShchHistory_cout = ShchHistory::find()
                     <li class="list-group-item"><?= Html::encode("Наименование схемы : " . $model->scheme) ?></li>
                     <li class="list-group-item"><?= Html::encode("Описание изменений : " . $model->descriptin) ?></li>
                     <li class="list-group-item"><?= Html::encode("Основание внесения изменений : " . $model->reason) ?></li>
-                    <li class="list-group-item">Результат проверки: <?php  if($model->result == 1){echo '<font color="red">Возвращено</font>';}elseif($model->result ==2){echo '<font color="green">Утверждено</font>';}else{echo '<font color="orange">На рассмотрении</font>';} ?></li>
+                    <li class="list-group-item">Результат проверки: <?php
+                    if($model->result == 1)
+                    {
+                        echo '<font color="red">Возвращено</font>';
+                    }
+                    elseif($model->result ==2)
+                    {
+                        echo '<font color="green">Утверждено</font>';
+                    }
+                    elseif($model->result ==0)
+                    {
+                        echo '<font color="orange">На рассмотрении</font>';
+                    }
+                    elseif($model->result == 3)
+                    {
+                        echo '<font color="#6495ed">На Отправлено в ШЛ</font>';
+                    }
+                    elseif($model->result == 4)
+                    {
+                        echo '<font color=purple>В работе</font>';
+                    }
+                    ?>
                     <li class="list-group-item"><?= Html::encode("Количество листов: " . $model->page) ?></li>
                     <li class="list-group-item"><?= Html::encode("Изменения внес ШЧ : " . $model->user->fio/*$shch_fio->fio*/) ?></li>
                     <?php if(Yii::$app->user->identity->id_post == 2)
