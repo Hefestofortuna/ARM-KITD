@@ -41,6 +41,8 @@ class SchemeSearch extends Scheme
      *
      * @return ActiveDataProvider
      */
+
+
     public function search($params)
     {
         $query = Scheme::find();
@@ -84,15 +86,32 @@ class SchemeSearch extends Scheme
             'scheme.id_org' => $this->id_org,//"scheme.id_org" в обяз, ибо в station.* тоже есть id_org.
         ]);
 
+
         $query->andFilterWhere(['like', 'scheme', $this->scheme])
             ->andFilterWhere(['like', 'descriptin', $this->descriptin])
             ->andFilterWhere(['like', 'reason', $this->reason])
-            ->andFilterWhere(['like','date', $this->date])
+            ->andFilterWhere(['like','date', $this->DateConvert($this->date)])
             ->andFilterWhere(['like', 'station.name', $this->id_station])
-            ->andFilterWhere(['like', 'shch.date_fuck', $this->id_shch])
-            ->andFilterWhere(['like', 'shl.date_utv', $this->id_shl])
+            ->andFilterWhere(['like', 'shch.date_fuck', $this->DateConvert($this->id_shch)])
+            ->andFilterWhere(['like', 'shl.date_utv', $this->DateConvert($this->id_shl)])
         ;
 
         return $dataProvider;
+    }
+    private function DateConvert($insert)
+    {
+        $date_format = explode('.', $insert);
+        $date_format = array_reverse($date_format);
+        foreach ($date_format as $item)
+        {
+            $item = $date_format;
+        }
+
+        $date_format = implode("-",$item);
+        if($date_format[0] == "-")
+        {
+            $date_format = substr($date_format, 1);
+        }
+        return $date_format;
     }
 }
