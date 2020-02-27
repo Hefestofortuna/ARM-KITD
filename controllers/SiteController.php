@@ -2,9 +2,13 @@
 
 namespace app\controllers;
 
+require '../vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Yii;    
-use app\models\Scheme;
+use \app\models\Scheme;
 use app\models\SchemeSearch;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -64,6 +68,54 @@ class SiteController extends Controller
                 'dataProvider' => $dataProvider,
             ]);
         }
+    }
+    public function actionDownload()
+    {
+
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load("../doc/Template/TemplateSHCH.xlsx");
+        $select = Yii::$app->db->createCommand('SELECT station.name, scheme.scheme, scheme.descriptin, scheme.reason, shl.date_utv, shch.number_date_protocol, shch.number_date_raport, shch.date_plan, shch.date_fuck, shch.couse FROM scheme INNER JOIN shl ON scheme.id = shl.number_scheme INNER JOIN shch ON scheme.id = shch.number_scheme INNER JOIN station ON scheme.id_station = station.id')
+            ->queryAll();
+        $worksheet = $spreadsheet->getActiveSheet();
+        for($i = 0; $i< count($select); $i++)
+        {
+            $s = 0;
+            foreach ($select[$i] as &$item)
+            {
+                //$worksheet->setCellValue("A".("$i"+2), $item);
+                //echo $item . " ";
+                $worksheet->setCellValue("A".("$i"+2), $i+1);
+                switch ($s)
+                {
+                    case(0):
+                        $worksheet->setCellValue("B".("$i"+2), $item);
+                    case(1):
+                        $worksheet->setCellValue("C".("$i"+2), $item);
+                    case(2):
+                        $worksheet->setCellValue("D".("$i"+2), $item);
+                    case(3):
+                        $worksheet->setCellValue("E".("$i"+2), $item);
+                    case(4):
+                        $worksheet->setCellValue("F".("$i"+2), $item);
+                    case(5):
+                        $worksheet->setCellValue("G".("$i"+2), $item);
+                    case(6):
+                        $worksheet->setCellValue("H".("$i"+2), $item);
+                    case(7):
+                        $worksheet->setCellValue("I".("$i"+2), $item);
+                    case(8):
+                        $worksheet->setCellValue("J".("$i"+2), $item);
+                    case(9):
+                        $worksheet->setCellValue("K".("$i"+2), $item);
+                }
+                $s++;
+                //if($s %10 == 0)
+                //    echo "<br/>";
+            }
+
+        }
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+        $writer->save('document_download/writeline.xls');
+        return null;
     }
 
     /**

@@ -3,6 +3,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use \yii\helpers\ArrayHelper;
 use \app\models\Org;
+use \app\models\Scheme;
+use yii\db\Query;
+use \yii\bootstrap\Modal;
+use dosamigos\datepicker\DatePicker;
 
 
 /* @var $this yii\web\View */
@@ -17,9 +21,33 @@ $this->title = 'АРМ-КИТД';
 -->
     <div class="body-content">
         <div class="row">
-        <?= Yii::$app->user->identity->id_post != "2" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null ?>
-        <?= Yii::$app->user->identity->id_post != "1" ? Html::a('Формирование отчета', ['', 'id' => $model->id], ['class' => 'btn btn-primary btn btn-block']) : null ?>
+            <?php Modal::begin([
+                'header' => "Отчет за:",
+                'toggleButton' => [
+                'label' => 'Формаирование отчета',
+                'tag' => 'button',
+                'class' => 'btn btn-primary btn btn-block',
+                    ],
+            ]);
+            ?>
+            <div class="input-append date form_datetime">
+                <input size="16" type="text" value="" readonly>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
 
+            <script type="text/javascript">
+                $(".form_datetime").datetimepicker({
+                    format: "dd MM yyyy - hh:ii"
+                });
+            </script>
+
+            <?php
+
+            Modal::end();
+            echo "<br/>";
+            ?>
+        <?= Yii::$app->user->identity->id_post != "3" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null ?>
+        <?= Yii::$app->user->identity->id_post != "4" ? Html::a('Формирование отчета', ['', 'id' => $model->id], ['class' => 'btn btn-primary btn btn-block']) : null ?>
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,'options' => ['style' => 'max-width: 100%;'],//Очень годно!Не дает выйти гриду за пределы экрана

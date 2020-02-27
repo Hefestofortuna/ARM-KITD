@@ -20,7 +20,9 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "2amigos/yii2-date-picker-widget": "~1.0",
         "phpoffice/phpword": "^0.17.0",
-        "moonlandsoft/yii2-phpexcel": "*"
+        "moonlandsoft/yii2-phpexcel": "*",
+        "yii2tech/spreadsheet": "^1.0",
+        "phpoffice/phpspreadsheet": "^1.10"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
