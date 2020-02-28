@@ -74,7 +74,7 @@ $ShchHistory_cout = ShchHistory::find()
                     }
                     elseif($model->result == 3)
                     {
-                        echo '<font color="#6495ed">На Отправлено в ШЛ</font>';
+                        echo '<font color="#6495ed">Отправлено в ШЛ</font>';
                     }
                     elseif($model->result == 4)
                     {
@@ -117,7 +117,7 @@ $ShchHistory_cout = ShchHistory::find()
                     }
                     elseif($model->result == 3)
                     {
-                        echo '<font color="#6495ed">На Отправлено в ШЛ</font>';
+                        echo '<font color="#6495ed">Отправлено в ШЛ</font>';
                     }
                     elseif($model->result == 4)
                     {

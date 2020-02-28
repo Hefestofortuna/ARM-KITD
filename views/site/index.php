@@ -16,46 +16,35 @@ $this->title = 'АРМ-КИТД';
     <div class="body-content">
         <div class="row">
             <?php Modal::begin([
-                'header' => "Отчет за:",
+                'header' => "Формирования отчета в Excel:",
                 'toggleButton' => [
-                'label' => 'Формаирование отчета',
+                'label' => 'Формирование отчета',
                 'tag' => 'button',
                 'class' => 'btn btn-primary btn btn-block',
                     ],
             ]);
-
             $form = ActiveForm::begin();
-            echo $form->field($model, 'date_first')->widget(DatePicker::className(), [
-                'value' => '02-16-2012',
-                'attribute' => 'model',
+            echo $form->field($model_site, 'date_first')->widget(DatePicker::className(), [
+                'attribute' => 'model_site',
                 'language'=>'ru',
-                'template' => '{addon}{input}',
                 'clientOptions' => [
                     'autoclose' => true,
                     'format' => 'yyyy-mm-dd'
                 ]
             ]);
-            echo $form->field($model, 'date_second')->widget(DatePicker::className(), [
-                'value' => '02-16-2012',
-                'attribute' => 'model',
+            echo $form->field($model_site, 'date_second')->widget(DatePicker::className(), [
+                'attribute' => 'model_site',
                 'language'=>'ru',
-                'template' => '{addon}{input}',
                 'clientOptions' => [
                     'autoclose' => true,
                     'format' => 'yyyy-mm-dd'
                 ]
             ]);
-            echo Html::a('Изменить', ['/site/download'], ['class' => 'btn btn-primary','data'=>['method' => 'post','derp'=>'herp']]);
-            echo "<br/>";
+            echo Html::a('Загрузить отчет', ['/site/download'], ['class' => 'btn btn-primary','data'=>['method' => 'post','derp'=>'herp']]);
             ActiveForm::end();
             Modal::end();
             ?>
-        <?php
-            // echo Yii::$app->user->identity->id_post != "3" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null
-            ?>
-        <?php
-            // echo Yii::$app->user->identity->id_post != "4" ? Html::a('Формирование отчета', ['', 'id' => $model->id], ['class' => 'btn btn-primary btn btn-block']) : null
-            ?>
+        <?= Yii::$app->user->identity->id_post != "3" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null ?>
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,'options' => ['style' => 'max-width: 100%;'],//Очень годно!Не дает выйти гриду за пределы экрана
@@ -152,6 +141,5 @@ $this->title = 'АРМ-КИТД';
         ],
     ]); ?>
         </div>
-
     </div>
 </div>

@@ -64,6 +64,7 @@ class Scheme extends \yii\db\ActiveRecord
             'id_org' => 'Дитанция',
         ];
     }
+
     public function getUser()
     {
         return $this->hasOne(User::className(),['id'=>'id_author']);
@@ -93,26 +94,5 @@ class Scheme extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ShchHistory::className(), ['id'=>'id_shch']);
     }
-    
-    /*public function afterSave($insert, $changedAttributes)
-    {
-        if($insert){
-            $shch_model = new Shch();
-            $shl_model = new Shl();
-            $shl_model->number_scheme = $this->id;
-            $shl_model->result = 0;
-            $shch_model->number_scheme = $this->id;
-            $this->id_shl = $this->id;
-            $shl_model->save();
-            $shch_model->save();
-            $this->id_shch = $shch_model->id;
-            $this->id_shl = $shl_model->id;
-            $this->save();
-            return $this->number;
-        }
-        else{
-            return $this->number;
-        }
-    }
-    */
+
 }

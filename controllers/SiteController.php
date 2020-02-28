@@ -5,25 +5,12 @@ namespace app\controllers;
 require '../vendor/autoload.php';
 
 use app\models\Site;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Yii;    
-use \app\models\Scheme;
+use Yii;
 use app\models\SchemeSearch;
-use yii\db\Query;
-use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
-use app\controllers\behaviors\AccessBehavior;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         /*
@@ -35,9 +22,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
@@ -51,11 +35,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         if(Yii::$app->user->isGuest)
@@ -63,22 +42,21 @@ class SiteController extends Controller
             return Yii::$app->getResponse()->redirect(array('user/login'));
         }
         else {
-            $model = new Site();
+            $model_site = new Site();
             $searchModel = new SchemeSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('index', [
-                'model' => $model,
+                'model_site' => $model_site,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
         }
     }
+
     public function actionDownload()
     {
-        //$model = new Site();
         $request = Yii::$app->request;
         $request = $request->post('Site');
-        $request['date_first'];
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load("../doc/Template/TemplateSHCH.xlsx");
         $select = Yii::$app->db->createCommand('SELECT station.name, scheme.scheme, scheme.descriptin, scheme.reason, shl.date_utv, shch.number_date_protocol, shch.number_date_raport, shch.date_plan, shch.date_fuck, shch.couse FROM scheme INNER JOIN shl ON scheme.id = shl.number_scheme INNER JOIN shch ON scheme.id = shch.number_scheme INNER JOIN station ON scheme.id_station = station.id WHERE shl.date_utv BETWEEN \''.$request['date_first']. '\' AND \''. $request['date_second'] . '\'')
             ->queryAll();
@@ -88,8 +66,6 @@ class SiteController extends Controller
             $s = 0;
             foreach ($select[$i] as &$item)
             {
-                //$worksheet->setCellValue("A".("$i"+2), $item);
-                //echo $item . " ";
                 $worksheet->setCellValue("A".("$i"+2), $i+1);
                 switch ($s)
                 {
@@ -115,25 +91,20 @@ class SiteController extends Controller
                         $worksheet->setCellValue("K".("$i"+2), $item);
                 }
                 $s++;
-                //if($s %10 == 0)
-                //    echo "<br/>";
             }
-
         }
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
-        $writer->save('document_download/writeline.xls');
+        header('Content-disposition: attachment; filename=Otchet_za_'. date('d-m-Y').'.xlsx');
+        header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        ob_clean();
+        flush();
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
         return null;
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string     
-    
-     * Logout action.
-     *
-     * @return Response
-     */
     public function actionLogout()
     {
         if(Yii::$app->user->isGuest)
@@ -147,33 +118,16 @@ class SiteController extends Controller
         }
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
     public function actionContact()
     {
-            $model = new Site();//Поменя на название модели, которой нет
-
+            $model = new Site();
             return $this->render('contact', [
                 'model' => $model,
             ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
     public function actionAbout()
     {
-       // if(Yii::$app->user->isGuest)
-       // {
-       //     return Yii::$app->getResponse()->redirect(array('user/login'));
-       // }
-       // else {
             return $this->render('about');
-       // }
     }
 }

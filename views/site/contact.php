@@ -13,9 +13,4 @@ $this->title = 'Обратная связь';
 ?>
 <div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php
-    $request = Yii::$app->request;
-    $request = $request->post('Site');
-    print_r($request['date_first']);
-    ?>
 </div>

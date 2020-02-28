@@ -27,8 +27,8 @@ class Site extends Model
     public function attributeLabels()
     {
         return [
-            'date_first' => 'Первое',
-            'date_second' => 'Второе',
+            'date_first' => 'Начальная дата утверждения изменений',
+            'date_second' => 'Конечная дата утверждения изменений',
         ];
     }
 
