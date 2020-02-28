@@ -70,7 +70,7 @@ $ShchHistory_cout = ShchHistory::find()
                     }
                     elseif($model->result ==0)
                     {
-                        echo '<font color="orange">На рассмотрении</font>';
+                        echo '<font color="orange">В работе у ШЛ</font>';
                     }
                     elseif($model->result == 3)
                     {
@@ -78,7 +78,7 @@ $ShchHistory_cout = ShchHistory::find()
                     }
                     elseif($model->result == 4)
                     {
-                        echo '<font color=purple>В работе</font>';
+                        echo '<font color=purple>В работе у ШЧ</font>';
                     }
                     ?>
                     </li>
@@ -113,7 +113,7 @@ $ShchHistory_cout = ShchHistory::find()
                     }
                     elseif($model->result ==0)
                     {
-                        echo '<font color="orange">На рассмотрении</font>';
+                        echo '<font color="orange">В работе у ШЛ</font>';
                     }
                     elseif($model->result == 3)
                     {
@@ -121,7 +121,7 @@ $ShchHistory_cout = ShchHistory::find()
                     }
                     elseif($model->result == 4)
                     {
-                        echo '<font color=purple>В работе</font>';
+                        echo '<font color=purple>В работе у ШЧ</font>';
                     }
                     ?>
                     <li class="list-group-item"><?= Html::encode("Количество листов: " . $model->page) ?></li>

@@ -58,7 +58,7 @@ class SiteController extends Controller
         $request = Yii::$app->request;
         $request = $request->post('Site');
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load("../doc/Template/TemplateSHCH.xlsx");
-        $select = Yii::$app->db->createCommand('SELECT station.name, scheme.scheme, scheme.descriptin, scheme.reason, shl.date_utv, shch.number_date_protocol, shch.number_date_raport, shch.date_plan, shch.date_fuck, shch.couse FROM scheme INNER JOIN shl ON scheme.id = shl.number_scheme INNER JOIN shch ON scheme.id = shch.number_scheme INNER JOIN station ON scheme.id_station = station.id WHERE shl.date_utv BETWEEN \''.$request['date_first']. '\' AND \''. $request['date_second'] . '\'')
+        $select = Yii::$app->db->createCommand('SELECT station.name, scheme.scheme, scheme.descriptin, scheme.reason, shl.date_utv, shch.number_date_protocol, shch.number_date_raport, shch.date_plan, shch.date_fuck, shch.couse FROM scheme INNER JOIN shl ON scheme.id = shl.number_scheme INNER JOIN shch ON scheme.id = shch.number_scheme INNER JOIN station ON scheme.id_station = station.id WHERE (shl.date_utv BETWEEN \''.$request['date_first']. '\' AND \''. $request['date_second'] . '\') AND scheme.id_org = \'' . Yii::$app->user->identity->id_org .'\'')
             ->queryAll();
         $worksheet = $spreadsheet->getActiveSheet();
         for($i = 0; $i< count($select); $i++)

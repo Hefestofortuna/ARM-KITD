@@ -40,11 +40,12 @@ $this->title = 'АРМ-КИТД';
                     'format' => 'yyyy-mm-dd'
                 ]
             ]);
-            echo Html::a('Загрузить отчет', ['/site/download'], ['class' => 'btn btn-primary','data'=>['method' => 'post','derp'=>'herp']]);
+            echo Html::a('Скачать отчет', ['/site/download'], ['class' => 'btn btn-primary','data'=>['method' => 'post','derp'=>'herp']]);
             ActiveForm::end();
             Modal::end();
             ?>
-        <?= Yii::$app->user->identity->id_post != "3" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null ?>
+            <br/>
+        <?= Yii::$app->user->identity->id_post != "2" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null ?>
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,'options' => ['style' => 'max-width: 100%;'],//Очень годно!Не дает выйти гриду за пределы экрана
@@ -90,7 +91,7 @@ $this->title = 'АРМ-КИТД';
             ],
             [
                 'attribute' => 'result',
-                'filter'=>['0'=>'На рассмотрении','1'=>'Возвращено','2'=>'Утверждено','3'=>'Отправлено в ШЛ','4'=>'В работе'],
+                'filter'=>['0'=>'В работе у ШЛ','1'=>'Возвращено','2'=>'Утверждено','3'=>'Отправлено в ШЛ','4'=>'В работе у ШЧ'],
                 'headerOptions' => ['style' => 'width:11%'],
                 'content' => function($model){
                     if($model->result == 1)
@@ -103,7 +104,7 @@ $this->title = 'АРМ-КИТД';
                     }
                     elseif($model->result ==0)
                     {
-                        return '<font color="orange">На рассмотрении</font>';
+                        return '<font color="orange">В работе у ШЛ</font>';
                     }
                     elseif($model->result == 3)
                     {
@@ -111,7 +112,7 @@ $this->title = 'АРМ-КИТД';
                     }
                     elseif($model->result == 4)
                     {
-                        return '<font color=purple>В работе</font>';
+                        return '<font color=purple>В работе у ШЧ</font>';
                     }
 
                 }

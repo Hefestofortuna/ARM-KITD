@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Scheme;
+use app\models\Shch;
 use Yii;
 use app\models\Shl;
 use app\models\ShlSearch;
@@ -96,7 +98,13 @@ class ShlController extends Controller
         }
         elseif(Yii::$app->user->identity->id_post == 2) {
             $model = $this->findModel($id);
-
+            $model_scheme = Scheme::findOne(['id'=> $model->number_scheme]);
+            if($model->date_shl !== "")
+            {
+                $model_scheme->result = 0;
+                $model->result = 0;
+            }
+            $model_scheme->save();
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['/scheme/view', 'id' => $model->number_scheme]);
             }

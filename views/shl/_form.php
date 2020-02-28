@@ -27,7 +27,7 @@ use \app\models\User;
         ]
     ]);?>
 
-    <?= $form->field($model, 'result')->dropDownList(['0'=>'На рассмотрении','1'=>'Возвращено','2'=>'Утверждено','3'=>'Отправлено в ШЛ','4'=>'В работе'])?>
+    <?= $form->field($model, 'result')->dropDownList(['0'=>'В работе у ШЛ','1'=>'Возвращено','2'=>'Утверждено'])?>
 
     <?= $form->field($model, 'date_utv')->widget(DatePicker::className(), [
         'value' => '02-16-2012',

@@ -118,19 +118,22 @@ class ShchController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $model_scheme = Scheme::findOne(['id'=> $model->number_scheme]);
                 $model_shl = Shl::findOne(['number_scheme' =>$model->number_scheme]);
-                if($model->date_shl != "")
+                if($model_shl->result != 0 && $model_shl->result != 2)
                 {
-                    $model_shl->result = 3;
-                    $model_scheme->result = 3;
-                    $model_shl->save();
-                    $model_scheme->save();
-                }
-                elseif($model->date_shl == "")
-                {
-                    $model_shl->result = 4;
-                    $model_scheme->result = 4;
-                    $model_shl->save();
-                    $model_scheme->save();
+                    if($model->date_shl != "")
+                    {
+                        $model_shl->result = 3;
+                        $model_scheme->result = 3;
+                        $model_shl->save();
+                        $model_scheme->save();
+                    }
+                    elseif($model->date_shl == "")
+                    {
+                        $model_shl->result = 4;
+                        $model_scheme->result = 4;
+                        $model_shl->save();
+                        $model_scheme->save();
+                    }
                 }
                 return $this->redirect(['/scheme/view', 'id' => $model->number_scheme]);
             }

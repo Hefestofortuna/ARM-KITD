@@ -69,4 +69,8 @@ class Shl extends \yii\db\ActiveRecord
             return $this->number_scheme;
         }
     }
+    public function getPost()
+    {
+        return $this->hasOne(Result::className(), ['id'=>'result']);
+    }
 }
