@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+    use yii\helpers\Html;
 use yii\grid\GridView;
 use \yii\helpers\ArrayHelper;
 use \app\models\Org;
@@ -7,18 +7,12 @@ use \app\models\Scheme;
 use yii\db\Query;
 use \yii\bootstrap\Modal;
 use dosamigos\datepicker\DatePicker;
-
-
+use \app\models\Site;
+use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
-
 $this->title = 'АРМ-КИТД';
 ?>
 <div class="site-index">
-
-   <!--<div class="jumbotron">
-        
-    </div>
--->
     <div class="body-content">
         <div class="row">
             <?php Modal::begin([
@@ -29,25 +23,39 @@ $this->title = 'АРМ-КИТД';
                 'class' => 'btn btn-primary btn btn-block',
                     ],
             ]);
-            ?>
-            <div class="input-append date form_datetime">
-                <input size="16" type="text" value="" readonly>
-                <span class="add-on"><i class="icon-th"></i></span>
-            </div>
 
-            <script type="text/javascript">
-                $(".form_datetime").datetimepicker({
-                    format: "dd MM yyyy - hh:ii"
-                });
-            </script>
-
-            <?php
-
-            Modal::end();
+            $form = ActiveForm::begin();
+            echo $form->field($model, 'date_first')->widget(DatePicker::className(), [
+                'value' => '02-16-2012',
+                'attribute' => 'model',
+                'language'=>'ru',
+                'template' => '{addon}{input}',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);
+            echo $form->field($model, 'date_second')->widget(DatePicker::className(), [
+                'value' => '02-16-2012',
+                'attribute' => 'model',
+                'language'=>'ru',
+                'template' => '{addon}{input}',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);
+            echo Html::a('Изменить', ['/site/download'], ['class' => 'btn btn-primary','data'=>['method' => 'post','derp'=>'herp']]);
             echo "<br/>";
+            ActiveForm::end();
+            Modal::end();
             ?>
-        <?= Yii::$app->user->identity->id_post != "3" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null ?>
-        <?= Yii::$app->user->identity->id_post != "4" ? Html::a('Формирование отчета', ['', 'id' => $model->id], ['class' => 'btn btn-primary btn btn-block']) : null ?>
+        <?php
+            // echo Yii::$app->user->identity->id_post != "3" ? Html::a('Добавить проект', ['/scheme/create', 'id' => $model->id], ['class' => 'btn btn-success btn btn-block']) : null
+            ?>
+        <?php
+            // echo Yii::$app->user->identity->id_post != "4" ? Html::a('Формирование отчета', ['', 'id' => $model->id], ['class' => 'btn btn-primary btn btn-block']) : null
+            ?>
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,'options' => ['style' => 'max-width: 100%;'],//Очень годно!Не дает выйти гриду за пределы экрана

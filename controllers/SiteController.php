@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 require '../vendor/autoload.php';
+
+use app\models\Site;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Yii;    
@@ -61,9 +63,11 @@ class SiteController extends Controller
             return Yii::$app->getResponse()->redirect(array('user/login'));
         }
         else {
+            $model = new Site();
             $searchModel = new SchemeSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('index', [
+                'model' => $model,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
@@ -71,9 +75,12 @@ class SiteController extends Controller
     }
     public function actionDownload()
     {
-
+        //$model = new Site();
+        $request = Yii::$app->request;
+        $request = $request->post('Site');
+        $request['date_first'];
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load("../doc/Template/TemplateSHCH.xlsx");
-        $select = Yii::$app->db->createCommand('SELECT station.name, scheme.scheme, scheme.descriptin, scheme.reason, shl.date_utv, shch.number_date_protocol, shch.number_date_raport, shch.date_plan, shch.date_fuck, shch.couse FROM scheme INNER JOIN shl ON scheme.id = shl.number_scheme INNER JOIN shch ON scheme.id = shch.number_scheme INNER JOIN station ON scheme.id_station = station.id')
+        $select = Yii::$app->db->createCommand('SELECT station.name, scheme.scheme, scheme.descriptin, scheme.reason, shl.date_utv, shch.number_date_protocol, shch.number_date_raport, shch.date_plan, shch.date_fuck, shch.couse FROM scheme INNER JOIN shl ON scheme.id = shl.number_scheme INNER JOIN shch ON scheme.id = shch.number_scheme INNER JOIN station ON scheme.id_station = station.id WHERE shl.date_utv BETWEEN \''.$request['date_first']. '\' AND \''. $request['date_second'] . '\'')
             ->queryAll();
         $worksheet = $spreadsheet->getActiveSheet();
         for($i = 0; $i< count($select); $i++)
@@ -147,13 +154,8 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        
-            $model = new ContactForm();
-            if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('contactFormSubmitted');
+            $model = new Site();//Поменя на название модели, которой нет
 
-                return $this->refresh();
-            }
             return $this->render('contact', [
                 'model' => $model,
             ]);
